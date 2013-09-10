@@ -1,0 +1,20 @@
+# Canales
+NICK = "reed"
+CHANNELS = [ "#test" ]
+PORT = 6997
+SERVER = "irc.hackcoop.com.ar"
+SSL = true
+
+# Jabber
+JABBER_ACCOUNT = ""
+JABBER_PASSWORD = ""
+JABBER_RECIPIENTS = [ "" ]
+
+# Twitter
+# Ir a https://dev.twitter.com/apps
+TWITTER_CONSUMER_KEY=""
+TWITTER_CONSUMER_SECRET=""
+TWITTER_ACCESS_TOKEN=""
+TWITTER_TOKEN_SECRET=""
+
+

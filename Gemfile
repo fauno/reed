@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
 gem "cinch"
-gem "broadcast"
+gem "broadcast", github: "fauno/broadcast"
