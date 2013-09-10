@@ -1,10 +1,7 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: git://github.com/fauno/broadcast.git
+  revision: 147b68170e5bb6794ae478bd4f75c7147e30e200
   specs:
-    addressable (2.3.5)
-    broach (0.3.0)
-      multi_json (~> 1.7)
-      nap (~> 0.5)
     broadcast (0.3.0)
       broach
       hashie
@@ -14,6 +11,14 @@ GEM
       shout-bot
       smsified
       xmpp4r
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.5)
+    broach (0.3.0)
+      multi_json (~> 1.7)
+      nap (~> 0.5)
     cinch (2.0.9)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
@@ -48,5 +53,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  broadcast
+  broadcast!
   cinch
