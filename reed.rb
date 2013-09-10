@@ -1,23 +1,65 @@
 # Bot periodista
 require 'cinch'
 require 'broadcast'
+require './config'
 
 Broadcast.setup do |config|
   config.jabber { |jabber|
-    jabber.username = ""
-    jabber.password = ""
-    jabber.recipients = ""
+    jabber.username = JABBER_ACCOUNT
+    jabber.password = JABBER_PASSWORD
+    jabber.recipients = JABBER_RECIPIENTS
   }
+
+  config.twitter { |twitter|
+    twitter.consumer_key    = TWITTER_CONSUMER_KEY
+    twitter.consumer_secret = TWITTER_CONSUMER_SECRET
+    twitter.access_token    = TWITTER_ACCESS_TOKEN
+    twitter.access_secret   = TWITTER_TOKEN_SECRET
+  }
+
+# config.email { |email|
+#   email.recipients = JABBER_RECIPIENTS
+#   email.delivery_method = :sendmail
+# }
+
+# La joda de esto es que se conecta y se desconecta
+# config.irc { |irc|
+#   irc.username = 'reed___'
+#   irc.server = 'irc.freenode.net'
+#   irc.port = '6667'
+#   irc.channel = 'endefensadelsl'
+# }
+end
+
+module Cinch
+  class Message
+    include Broadcast::Publishable
+
+# TODO cargar estos dinámicamente
+    medium :jabber
+    medium :twitter
+#    medium :email
+#    medium :irc
+
+    def body
+      self.message
+    end
+
+    def subject
+      self.message
+    end
+
+  end
 end
 
 reed = Cinch::Bot.new do
 
   configure do |c|
-    c.nick = "reed"
-    c.server = "irc.hackcoop.com.ar"
-    c.port = 6697
-    c.ssl.use = true
-    c.channels = [ "#test" ]
+    c.nick = NICK
+    c.server = SERVER
+    c.port = PORT
+    c.ssl.use = SSL
+    c.channels = CHANNELS
 
     @taking_notes = false
   end
@@ -28,12 +70,13 @@ reed = Cinch::Bot.new do
   end
 
   on :message, "-j" do |m|
-    @taking_notes = true
+    @taking_notes = false
     m.reply "ok"
   end
 
-  on :message do |m|
-    Broadcast::Message::Simple.new(:body => m.message).publish(:jabber) if @taking_notes
+# Publicar todo si estamos tomando notas
+  on :message, /^[^\-+][^j]/ do |m|
+    m.publish if @taking_notes
   end
 
 end
