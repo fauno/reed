@@ -75,7 +75,7 @@ reed = Cinch::Bot.new do
   end
 
   # Dejar de tomar notas si entra alguien al canal
-  on :join do |m, usuario|
+  on :join do |m|
     m.reply "shhh, viene alguien!" if @taking_notes
     @taking_notes = false
   end
