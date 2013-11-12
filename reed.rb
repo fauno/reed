@@ -2,6 +2,7 @@
 require 'cinch'
 require 'broadcast'
 require './config'
+require './lib/invite.rb'
 
 Broadcast.setup do |config|
   config.jabber { |jabber|
@@ -42,11 +43,11 @@ module Cinch
 #    medium :irc
 
     def body
-      self.message
+      self.message + " " + self.channel
     end
 
     def subject
-      self.message
+      self.message + " " + self.channel
     end
 
   end
@@ -60,6 +61,7 @@ reed = Cinch::Bot.new do
     c.port = PORT
     c.ssl.use = SSL
     c.channels = CHANNELS
+    c.plugins.plugins = [ AcceptInvite ]
 
     @taking_notes = false
   end
@@ -72,6 +74,12 @@ reed = Cinch::Bot.new do
   on :message, "-j" do |m|
     @taking_notes = false
     m.reply "ok"
+  end
+
+  # Dejar de tomar notas si entra alguien al canal
+  on :join do |m|
+    m.reply "shhh, viene alguien!" if @taking_notes
+    @taking_notes = false
   end
 
 # Publicar todo si estamos tomando notas
