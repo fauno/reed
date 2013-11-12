@@ -2,6 +2,7 @@
 require 'cinch'
 require 'broadcast'
 require './config'
+require './lib/invite.rb'
 
 Broadcast.setup do |config|
   config.jabber { |jabber|
@@ -60,6 +61,7 @@ reed = Cinch::Bot.new do
     c.port = PORT
     c.ssl.use = SSL
     c.channels = CHANNELS
+    c.plugins.plugins = [ AcceptInvite ]
 
     @taking_notes = false
   end
