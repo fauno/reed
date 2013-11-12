@@ -43,11 +43,11 @@ module Cinch
 #    medium :irc
 
     def body
-      self.message
+      self.message + " " + self.channel
     end
 
     def subject
-      self.message
+      self.message + " " + self.channel
     end
 
   end
